@@ -180,7 +180,7 @@ async function displayFeaturedProducts() {
     
     try {
         const productos = await fetchProductos();
-        const featured = productos.slice(0, 4); // Primeros 4 productos
+        const featured = productos.slice(0, 7); // Primeros 7 productos
         
         container.innerHTML = '';
         
@@ -305,6 +305,54 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar carrito
     updateCart();
+});
+
+// Función para el menú hamburguesa
+function toggleMobileMenu() {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const mainNav = document.getElementById('main-nav');
+    
+    hamburgerMenu.classList.toggle('active');
+    mainNav.classList.toggle('active');
+    
+    // Prevenir scroll del body cuando el menú está abierto
+    document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+}
+
+function closeMobileMenu() {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const mainNav = document.getElementById('main-nav');
+    
+    hamburgerMenu.classList.remove('active');
+    mainNav.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Event listeners para el menú hamburguesa
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    if (hamburgerMenu) {
+        hamburgerMenu.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Cerrar menú al hacer clic fuera de él
+    document.addEventListener('click', function(event) {
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mainNav = document.getElementById('main-nav');
+        
+        if (mainNav && mainNav.classList.contains('active') && 
+            !hamburgerMenu.contains(event.target) && 
+            !mainNav.contains(event.target)) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Cerrar menú al redimensionar la ventana (si se vuelve a desktop)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+    });
 });
 
 // Hacer funciones globales para los event listeners HTML
