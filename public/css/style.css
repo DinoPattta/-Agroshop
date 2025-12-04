@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@900&display=swap');
 
 :root {
@@ -54,6 +53,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo {
@@ -70,6 +70,38 @@ body {
     font-family: 'Merriweather', serif;
     font-size: 1.8rem;
     margin: 0;
+}
+
+/* Menú Hamburguesa */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 nav ul {
@@ -445,7 +477,7 @@ footer {
     font-size: 0.95rem;
 }
 
-/* Responsive Design */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
     body {
         padding-top: 70px;
@@ -457,6 +489,65 @@ footer {
     
     .logo h1 {
         font-size: 1.4rem;
+    }
+    
+    /* Menú Hamburguesa - Mostrar */
+    .hamburger-menu {
+        display: flex;
+    }
+    
+    /* Navegación - Ocultar por defecto en móvil */
+    #main-nav {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        padding: 1rem 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+    
+    #main-nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    #main-nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+    
+    #main-nav ul li {
+        display: block;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    #main-nav ul li a {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    #main-nav ul li:last-child a {
+        border-bottom: none;
+    }
+    
+    #main-nav ul li a:hover {
+        background-color: rgba(255,255,255,0.1);
+        color: var(--secondary-color);
+        padding-left: 3rem;
     }
     
     nav ul li {
@@ -525,10 +616,11 @@ footer {
     
     .logo h1 {
         font-size: 1.2rem;
-        display: none;
+        display: block; /* Cambiado de 'none' a 'block' */
     }
     
-    nav {
+    /* Ocultar navegación original en móvil */
+    nav:not(#main-nav) {
         display: none;
     }
     
